@@ -11,9 +11,19 @@ import com.mintic.tienda.entities.TipoDocumento;
 import com.mintic.tienda.entities.Usuario;
 import com.mintic.tienda.repositories.IUsuario;
 
-@Service
+
+/*
+ * Implementamos la interface con sus metodos
+ * @Service  indica la logina empresarial toda la logica de negocio
+ * */
+@Service 
 public class UsuarioImp implements IUsuarioService {
 
+	/*
+	 * @Autowired inyeccion de dependencia  en este caso para acceder a los metodos del repositorio IUsuario (accedemos al crud)
+	 * 
+	 * */
+	
 	@Autowired
 	IUsuario iUsuario;
 
@@ -48,7 +58,7 @@ public class UsuarioImp implements IUsuarioService {
 		usuario.setNombre(usuarioDto.getNombre());
 		usuario.setNombreUsuario(usuarioDto.getNombreUsuario());
 		usuario.setPassword(usuarioDto.getPassword());
-
+		usuario.setEmail(usuarioDto.getEmail());
 		return iUsuario.save(usuario);
 	}
 

@@ -9,18 +9,35 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
+
+/*
+ * aquie se mapea la bd  las tablas de la base de datos son las entidades
+ *la entidad se utiliza en los repositorios 
+ * */
 @Entity
 @Table(name = Usuario.TABLE_NAME)
 public class Usuario {
 	public static final String TABLE_NAME = "usuario";
+	
+	
+	/*
+	 * @id para identificar la llave primaria
+	 * @@GeneratedValue(strategy = GenerationType.IDENTITY) se define el autoincremental	
+	 * */
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 
+	
+	/*@ManyToOne  hace referencia la relacion muchos a uno en este caso muchos usuario tienen un tipo de documento
+	 * @JoinColumn  el campo que hace de referecia a la llave foranea
+	 * */
 	@ManyToOne
 	@JoinColumn(name = "idTipoDocumento")
 	private TipoDocumento idTipoDocumento;
-
+	
+	/*@Column nombre de la columna , si el nombre en la base de datos del campo es igual a el de la variable no es necesario poner la anotacion
+	 * */
 	@Column(name = "numeroDocumento")
 	private String numeroDocumento;
 

@@ -18,17 +18,35 @@ import com.mintic.tienda.entities.Usuario;
 import com.mintic.tienda.repositories.ITipoDocumento;
 import com.mintic.tienda.servicio.IUsuarioService;
 
+
+/*@RestController permitir el manejo de solicitudes HTTP  get post put delete
+ * */
 @RestController
 public class Controlador {
 
+	
+	/*
+	 * inyectamos el la iterface del servicio para acceder a los metodos del negocio 
+	 **/
 	@Autowired
 	IUsuarioService iUsuario;
 
+	
+	/*
+	 * inyectamos el la iterface del repositirio
+	 * OJO lo hice directamento porque no es necesaria ninguna logica de negocio solo necesito el listado de tipos de documento
+	 * si quieren pueden hacerlo directamente con el repositorio de usuario y no tendrian que crear el servicio (pero no es la mejor forma de realzarlo)
+	 **/
 	@Autowired
 	ITipoDocumento iTipoDocumento;
-
+	
+	
+	
+	/*
+	 * @CrossOrigin indica desde que sitios se van a realizar peticiones
+	 * */
 	@CrossOrigin(origins = { "http://localhost:8080" })
-	@PostMapping("/loginclient")
+	@PostMapping("/loginclient")//ruta del servicio  desde el front deben  direccionar a esta ruta
 	public int login(@RequestBody LoginDto usuario) {
 
 		int responseLogin = iUsuario.login(usuario);
