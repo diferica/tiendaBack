@@ -8,6 +8,6 @@ class TiendaApplicationTests {
 
 	@Test
 	void contextLoads() {
-	}
+	}//nikolai 
 
 }
