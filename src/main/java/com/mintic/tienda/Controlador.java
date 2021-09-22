@@ -3,6 +3,7 @@ package com.mintic.tienda;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -18,40 +19,43 @@ import com.mintic.tienda.entities.Usuario;
 import com.mintic.tienda.repositories.ITipoDocumento;
 import com.mintic.tienda.servicio.IUsuarioService;
 
-
 /*@RestController permitir el manejo de solicitudes HTTP  get post put delete
  * */
 @RestController
 public class Controlador {
 
-	
 	/*
-	 * inyectamos el la iterface del servicio para acceder a los metodos del negocio 
+	 * inyectamos el la iterface del servicio para acceder a los metodos del negocio
 	 **/
 	@Autowired
 	IUsuarioService iUsuario;
 
-	
 	/*
-	 * inyectamos el la iterface del repositirio
-	 * OJO lo hice directamento porque no es necesaria ninguna logica de negocio solo necesito el listado de tipos de documento
-	 * si quieren pueden hacerlo directamente con el repositorio de usuario y no tendrian que crear el servicio (pero no es la mejor forma de realzarlo)
+	 * inyectamos el la iterface del repositirio OJO lo hice directamento porque no
+	 * es necesaria ninguna logica de negocio solo necesito el listado de tipos de
+	 * documento si quieren pueden hacerlo directamente con el repositorio de
+	 * usuario y no tendrian que crear el servicio (pero no es la mejor forma de
+	 * realzarlo)
 	 **/
 	@Autowired
 	ITipoDocumento iTipoDocumento;
-	
-	
-	
+
 	/*
 	 * @CrossOrigin indica desde que sitios se van a realizar peticiones
-	 * */
+	 */
 	@CrossOrigin(origins = { "http://localhost:8080" })
-	@PostMapping("/loginclient")//ruta del servicio  desde el front deben  direccionar a esta ruta
+	@PostMapping("/loginclient") // ruta del servicio desde el front deben direccionar a esta ruta
 	public int login(@RequestBody LoginDto usuario) {
 
 		int responseLogin = iUsuario.login(usuario);
 
 		return responseLogin;
+
+	}
+
+	@PostMapping("/login") // ruta del servicio desde el front deben direccionar a esta ruta
+	public ResponseEntity<?> loginCliente(@RequestBody LoginDto usuario) {
+		return iUsuario.ingresar(usuario);
 
 	}
 

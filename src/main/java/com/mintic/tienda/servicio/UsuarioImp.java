@@ -1,8 +1,12 @@
 package com.mintic.tienda.servicio;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import com.mintic.tienda.dto.LoginDto;
@@ -80,6 +84,37 @@ public class UsuarioImp implements IUsuarioService {
 		}
 
 		return usuario;
+	}
+
+	@Override
+	public ResponseEntity<?> ingresar(LoginDto usuarioDto) {
+		Map<String, Object> response = new HashMap<>();
+		Usuario usuario = null;	
+		try {
+			usuario = iUsuario.findByNameAndPassword(usuarioDto.getNombreUsuario(), usuarioDto.getPassword());
+			
+			 if (usuario ==null) {
+				 response.put("Usuario", null);
+				 response.put("Mensaje", "Alerta:Usuario o Password incorrectos");
+				 response.put("statusCode", HttpStatus.NOT_FOUND.value());
+				 return new ResponseEntity<>(response, HttpStatus.NOT_FOUND);
+		 	
+			 }else {
+				 response.put("Usuario", usuario);
+				 response.put("Mensaje", "Datos correctos");
+				 response.put("statusCode", HttpStatus.OK.value());
+				 return new ResponseEntity<>(response, HttpStatus.OK);
+		
+			 }
+			
+		} catch (Exception e) {
+			 response.put("Usuario", null);
+			 response.put("Mensaje", "Ha ocurrido un error");
+			 response.put("statusCode", HttpStatus.INTERNAL_SERVER_ERROR.value());
+			 return new ResponseEntity<>(response, HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+		
+		
 	}
 
 }
