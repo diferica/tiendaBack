@@ -8,7 +8,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
-
+// Monica Marie Anne Agudelo Hernandez
 
 /*
  * aquie se mapea la bd  las tablas de la base de datos son las entidades
