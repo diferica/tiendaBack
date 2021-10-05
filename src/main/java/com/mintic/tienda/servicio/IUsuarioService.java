@@ -23,6 +23,11 @@ public interface IUsuarioService {
 
 	int borrarUsuario(Long id);
 
+	Usuario buscarUsuarioPorNumero(String numero);
+	
 	ResponseEntity<?> ingresar(LoginDto usuarioDto);
+	
+	
+	Usuario loginUsuario (LoginDto usuarioDto);
 
 }

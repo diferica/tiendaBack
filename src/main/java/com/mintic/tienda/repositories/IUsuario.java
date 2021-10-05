@@ -30,4 +30,11 @@ public interface IUsuario extends CrudRepository<Usuario, Long> {
 	@Query("select p from Usuario as p where p.nombreUsuario= :nombreUsuario and p.password=:password")
 	Usuario findByNameAndPassword(@Param("nombreUsuario") String nombreUsuario,
 			@Param("password") String password);
+	
+	@Query("select p from Usuario as p where p.numeroDocumento=:numeroDocumento")
+	Usuario buscarUsuarioPorNumero(@Param("numeroDocumento") String numeroDocumento);
+	
+	
+	
+	
 }

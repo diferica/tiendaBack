@@ -15,25 +15,25 @@ import com.mintic.tienda.entities.TipoDocumento;
 import com.mintic.tienda.entities.Usuario;
 import com.mintic.tienda.repositories.IUsuario;
 
-
 /*
  * Implementamos la interface con sus metodos
  * @Service  indica la logina empresarial toda la logica de negocio
  * */
-@Service 
+@Service
 public class UsuarioImp implements IUsuarioService {
 
 	/*
-	 * @Autowired inyeccion de dependencia  en este caso para acceder a los metodos del repositorio IUsuario (accedemos al crud)
+	 * @Autowired inyeccion de dependencia en este caso para acceder a los metodos
+	 * del repositorio IUsuario (accedemos al crud)
 	 * 
-	 * */
-	
+	 */
+
 	@Autowired
 	IUsuario iUsuario;
 
 	/*
-	 * Motodo para validar si existe el usuari 
-	 * */
+	 * Motodo para validar si existe el usuari
+	 */
 	@Override
 	public int login(LoginDto usuarioDto) {
 		int u = iUsuario.findByNombreUsuarioAndPassword(usuarioDto.getNombreUsuario(), usuarioDto.getPassword());
@@ -52,11 +52,11 @@ public class UsuarioImp implements IUsuarioService {
 		Usuario usuario = new Usuario();
 		TipoDocumento td = new TipoDocumento();
 		td.setId(usuarioDto.getIdTipoDocumento());
-				
-		if(usuarioDto.getId()!=null) {
+
+		if (usuarioDto.getId() != null) {
 			usuario.setId(usuarioDto.getId());
 		}
-		
+
 		usuario.setIdTipoDocumento(td);
 		usuario.setNumeroDocumento(usuarioDto.getNumeroDocumento());
 		usuario.setNombre(usuarioDto.getNombre());
@@ -65,7 +65,6 @@ public class UsuarioImp implements IUsuarioService {
 		usuario.setEmail(usuarioDto.getEmail());
 		return iUsuario.save(usuario);
 	}
-
 
 	@Override
 	public int borrarUsuario(Long id) {
@@ -89,32 +88,42 @@ public class UsuarioImp implements IUsuarioService {
 	@Override
 	public ResponseEntity<?> ingresar(LoginDto usuarioDto) {
 		Map<String, Object> response = new HashMap<>();
-		Usuario usuario = null;	
+		Usuario usuario = null;
 		try {
 			usuario = iUsuario.findByNameAndPassword(usuarioDto.getNombreUsuario(), usuarioDto.getPassword());
-			
-			 if (usuario ==null) {
-				 response.put("Usuario", null);
-				 response.put("Mensaje", "Alerta:Usuario o Password incorrectos");
-				 response.put("statusCode", HttpStatus.NOT_FOUND.value());
-				 return new ResponseEntity<>(response, HttpStatus.NOT_FOUND);
-		 	
-			 }else {
-				 response.put("Usuario", usuario);
-				 response.put("Mensaje", "Datos correctos");
-				 response.put("statusCode", HttpStatus.OK.value());
-				 return new ResponseEntity<>(response, HttpStatus.OK);
-		
-			 }
-			
+
+			if (usuario == null) {
+				response.put("Usuario", null);
+				response.put("Mensaje", "Alerta:Usuario o Password incorrectos");
+				response.put("statusCode", HttpStatus.NOT_FOUND.value());
+				return new ResponseEntity<>(response, HttpStatus.NOT_FOUND);
+
+			} else {
+				response.put("Usuario", usuario);
+				response.put("Mensaje", "Datos correctos");
+				response.put("statusCode", HttpStatus.OK.value());
+				return new ResponseEntity<>(response, HttpStatus.OK);
+
+			}
+
 		} catch (Exception e) {
-			 response.put("Usuario", null);
-			 response.put("Mensaje", "Ha ocurrido un error");
-			 response.put("statusCode", HttpStatus.INTERNAL_SERVER_ERROR.value());
-			 return new ResponseEntity<>(response, HttpStatus.INTERNAL_SERVER_ERROR);
+			response.put("Usuario", null);
+			response.put("Mensaje", "Ha ocurrido un error");
+			response.put("statusCode", HttpStatus.INTERNAL_SERVER_ERROR.value());
+			return new ResponseEntity<>(response, HttpStatus.INTERNAL_SERVER_ERROR);
 		}
-		
-		
+
+	}
+
+	@Override
+	public Usuario buscarUsuarioPorNumero(String numero) {
+
+		return iUsuario.buscarUsuarioPorNumero(numero);
+	}
+
+	@Override
+	public Usuario loginUsuario(LoginDto usuarioDto) {
+		return iUsuario.findByNameAndPassword(usuarioDto.getNombreUsuario(), usuarioDto.getPassword());
 	}
 
 }
