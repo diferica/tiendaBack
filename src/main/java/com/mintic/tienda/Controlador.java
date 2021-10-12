@@ -19,10 +19,12 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.mintic.tienda.dto.LoginDto;
 import com.mintic.tienda.dto.UsuarioDto;
+import com.mintic.tienda.dto.VentaCliente;
 import com.mintic.tienda.entities.TipoDocumento;
 import com.mintic.tienda.entities.Usuario;
 import com.mintic.tienda.repositories.ITipoDocumento;
 import com.mintic.tienda.servicio.IUsuarioService;
+import com.mintic.tienda.servicio.IVentaService;
 
 //import io.jsonwebtoken.Jwts;
 //import io.jsonwebtoken.SignatureAlgorithm;
@@ -39,6 +41,9 @@ public class Controlador {
 	@Autowired
 	IUsuarioService iUsuario;
 
+	
+	@Autowired
+	IVentaService iVenteService;
 	
 	
 	
@@ -146,5 +151,13 @@ public class Controlador {
 
 		return (List<TipoDocumento>) iTipoDocumento.findAll();
 	}
+	
+	
+	@GetMapping("/reporteVenta")
+	public List<VentaCliente>reporteVenta(){
+		
+		return iVenteService.reporteVenta();
+	}
+	
 
 }
